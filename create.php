@@ -12,8 +12,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 }
  
 // Define variables and initialize with empty values
-$name = $description = $price =  $status = $img = "";
-$name_err = $description_err = $price_err = $status_err = $img_err = "";
+$name = $description = $weight = $price =  $status = $img = "";
+$name_err = $description_err = $weight_err = $price_err = $status_err = $img_err = "";
  
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -34,6 +34,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $description_err = "Please enter an description.";     
     } else{
         $description = $input_description;
+    }
+
+    $input_weight = trim($_POST["weight"]);
+    if(empty($input_weight)){
+        $weight_err = "Please enter an description.";     
+    } else{
+        $weight = $input_weight;
     }
     
     // Validate price
@@ -112,7 +119,7 @@ if (file_exists($target_file) && !empty($_FILES["fileToUpload"]["name"])) {
 
     
     // Check input errors before inserting in database
-    if(empty($name_err) && empty($description_err) && empty($price_err)  && empty($img_err) && empty($status_err) ){
+    if(empty($name_err) && empty($description_err) && empty($weight_err) && empty($price_err)  && empty($img_err) && empty($status_err) ){
 
           // Check if $uploadOk is set to 0 by an error
             if ($uploadOk == 0 && empty($img_err) ) {
@@ -129,15 +136,16 @@ if (file_exists($target_file) && !empty($_FILES["fileToUpload"]["name"])) {
             }
 
         // Prepare an insert statement
-        $sql = "INSERT INTO items (name, description, price,  file_name, created, status) VALUES (?, ?, ?, ?, NOW(),?)";
+        $sql = "INSERT INTO products (name, description, weight, price,  file_name, created, status) VALUES (?, ?, ?, ?, ?, NOW(), ?)";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "sssss", $param_name, $param_description, $param_price,  $param_file,$param_status);
+            mysqli_stmt_bind_param($stmt, "ssssss", $param_name, $param_description, $param_weight, $param_price,  $param_file,$param_status);
             
             // Set parameters
             $param_name = $name;
             $param_description = $description;
+            $param_weight = $weight;
             $param_price = $price;
             
             $param_file = $fileName;
@@ -203,6 +211,12 @@ if (file_exists($target_file) && !empty($_FILES["fileToUpload"]["name"])) {
                             <label>description</label>
                             <textarea name="description" class="form-control"><?php echo $description; ?></textarea>
                             <span class="help-block"><?php echo $description_err;?></span>
+                        </div>
+
+                        <div class="form-group <?php echo (!empty($weight_err)) ? 'has-error' : ''; ?>">
+                            <label>weight</label>
+                            <textarea name="weight" class="form-control"><?php echo $weight; ?></textarea>
+                            <span class="help-block"><?php echo $weight_err;?></span>
                         </div>
 
                         <div class="form-group <?php echo (!empty($price_err)) ? 'has-error' : ''; ?>">

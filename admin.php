@@ -49,7 +49,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     require_once "dbConfig.php";
                     
                     // Attempt select query execution
-                    $sql = "SELECT * FROM items";
+                    $sql = "SELECT * FROM products";
                     if($result = mysqli_query($link, $sql)){
                         if(mysqli_num_rows($result) > 0){
                             echo "<table class='table table-bordered table-responsive table-striped'>";
@@ -59,7 +59,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                         echo "<th>Name</th>";
                                         echo "<th>description</th>";
                                         echo "<th>price</th>";
-                                        
+                                        echo "<th>weight</th>";                                       
                                         echo "<th>created</th>";
                                         echo "<th>Last modified</th>";
                                         echo "<th>status</th>";
@@ -73,7 +73,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                         echo "<td>" . $row['name'] . "</td>";
                                         echo "<td>" . $row['description'] . "</td>";
                                         echo "<td>" . $row['price'] . "</td>";
-                                        
+                                        echo "<td>" . $row['weight'] . "</td>";                                        
                                         echo "<td>" . $row['created'] . "</td>";
                                         echo "<td>" . $row['modified'] . "</td>";
                                         if($row['status']==1){

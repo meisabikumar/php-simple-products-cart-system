@@ -15,7 +15,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     require_once "dbConfig.php";
     
     // Prepare a delete statement
-    $sql = "DELETE FROM items WHERE id = ?";
+    $sql = "DELETE FROM products WHERE id = ?";
     
     if($stmt = mysqli_prepare($link, $sql)){
         // Bind variables to the prepared statement as parameters
@@ -53,7 +53,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         $id =  trim($_GET["id"]);
         
         // Prepare a select statement
-        $sql = "SELECT * FROM items WHERE id = ?";
+        $sql = "SELECT * FROM products WHERE id = ?";
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "i", $param_id);

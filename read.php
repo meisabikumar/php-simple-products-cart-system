@@ -14,7 +14,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
     require_once "dbConfig.php";
     
     // Prepare a select statement
-    $sql = "SELECT * FROM items WHERE id = ?";
+    $sql = "SELECT * FROM products WHERE id = ?";
     
     if($stmt = mysqli_prepare($link, $sql)){
         // Bind variables to the prepared statement as parameters
@@ -36,7 +36,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                 $name = $row["name"];
                 $description = $row["description"];
                 $price = $row["price"];
-                            
+                $weight = $row["weight"];                            
                 $imageURL = 'uploads/'.$row["file_name"];
                 $created = $row["created"];
                 $modified = $row["modified"];
@@ -92,6 +92,10 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                     <div class="form-group">
                         <label>Description</label>
                         <p class="form-control-static"><?php echo $row["description"]; ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label>weight</label>
+                        <p class="form-control-static"><?php echo $row["weight"]; ?></p>
                     </div>
                     <div class="form-group">
                         <label>Price</label>

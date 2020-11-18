@@ -49,7 +49,9 @@ require_once 'dbConfig.php';
         <div class="card col-lg-4">
             <div class="card-body">
                 <h5 class="card-title"><?php echo $row["name"]; ?></h5>
+                <img src="uploads/<?php echo $row["file_name"]; ?>" alt="" width="300px">
                 <h6 class="card-subtitle mb-2 text-muted">Price: <?php echo '$'.$row["price"].' USD'; ?></h6>
+                <h6 class="card-subtitle mb-2 text">weight: <?php echo $row["weight"]; ?></h6>
                 <p class="card-text"><?php echo $row["description"]; ?></p>
                 <a href="cartAction.php?action=addToCart&id=<?php echo $row["id"]; ?>" class="btn btn-primary">Add to Cart</a>
             </div>

@@ -12,8 +12,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 }
  
 // Define variables and initialize with empty values
-$name = $description = $price  = $status = "";
-$name_err = $description_err = $price_err  = $status_err = "";
+$name = $description = $weight = $price  = $status = "";
+$name_err = $description_err = $weight_err = $price_err  = $status_err = "";
  
 // Processing form data when form is submitted
 if(isset($_POST["id"]) && !empty($_POST["id"])){
@@ -36,6 +36,14 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         $description_err = "Please enter an description.";     
     } else{
         $description = $input_description;
+    }
+
+    // Validate description
+    $input_weight = trim($_POST["weight"]);
+    if(empty($input_weight)){
+        $weight_err = "Please enter an weight.";     
+    } else{
+        $weight = $input_weight;
     }
     
     // Validate price
@@ -62,19 +70,19 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
      }
     
     // Check input errors before inserting in database
-    if(empty($name_err) && empty($description_err) && empty($price_err)  && empty($status_err) ){
+    if(empty($name_err) && empty($description_err) && empty($weight_err) && empty($price_err)  && empty($status_err) ){
         // Prepare an update statement
-        $sql = "UPDATE items SET name=?, description=?, price=?,  modified=NOW(), status=? WHERE id=?";
+        $sql = "UPDATE products SET name=?, description=?, weight=?, price=?,  modified=NOW(), status=? WHERE id=?";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ssssi", $param_name, $param_description, $param_price ,$param_status, $param_id);
+            mysqli_stmt_bind_param($stmt, "sssssi", $param_name, $param_description, $param_weight, $param_price ,$param_status, $param_id);
             
             // Set parameters
             $param_name = $name;
             $param_description = $description;
             $param_price = $price;
-            
+            $param_weight = $weight;            
             $param_status = $status;
             $param_id = $id;
             
@@ -101,7 +109,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         $id =  trim($_GET["id"]);
         
         // Prepare a select statement
-        $sql = "SELECT * FROM items WHERE id = ?";
+        $sql = "SELECT * FROM products WHERE id = ?";
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "i", $param_id);
@@ -122,7 +130,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                     $name = $row["name"];
                     $description = $row["description"];
                     $price = $row["price"];
-                                 
+                    $weight = $row["weight"];                                 
                     // $imageURL = 'uploads/'.$row["file_name"];
                     $created = $row["created"];
                     $modified = $row["modified"];
@@ -184,6 +192,12 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                             <label>description</label>
                             <textarea name="description" class="form-control"><?php echo $description; ?></textarea>
                             <span class="help-block"><?php echo $description_err;?></span>
+                        </div>
+
+                        <div class="form-group <?php echo (!empty($weight_err)) ? 'has-error' : ''; ?>">
+                            <label>weight</label>
+                            <input type="text" name="weight" class="form-control" value="<?php echo $weight; ?>">
+                            <span class="help-block"><?php echo $weight_err;?></span>
                         </div>
 
                         <div class="form-group <?php echo (!empty($price_err)) ? 'has-error' : ''; ?>">

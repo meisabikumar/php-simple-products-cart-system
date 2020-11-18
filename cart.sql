@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 17, 2020 at 05:04 PM
+-- Generation Time: Nov 18, 2020 at 01:12 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -58,6 +58,13 @@ CREATE TABLE `customers` (
   `status` enum('1','0') COLLATE utf8_unicode_ci NOT NULL DEFAULT '1' COMMENT '1=Active | 0=Inactive'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `customers`
+--
+
+INSERT INTO `customers` (`id`, `first_name`, `last_name`, `email`, `phone`, `address`, `created`, `modified`, `status`) VALUES
+(1, 'dfg', 'dgdf', 'admin@gmail.com', '89898', 'asd', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1');
+
 -- --------------------------------------------------------
 
 --
@@ -72,6 +79,13 @@ CREATE TABLE `orders` (
   `status` enum('Pending','Completed','Cancelled') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `customer_id`, `grand_total`, `created`, `status`) VALUES
+(1, 1, 46.00, '2020-11-18 17:41:55', 'Pending');
+
 -- --------------------------------------------------------
 
 --
@@ -85,6 +99,13 @@ CREATE TABLE `order_items` (
   `quantity` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `order_items`
+--
+
+INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `quantity`) VALUES
+(1, 1, 2, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -95,6 +116,7 @@ CREATE TABLE `products` (
   `id` int(11) NOT NULL,
   `name` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `weight` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `price` float(10,2) NOT NULL,
   `file_name` varchar(255) NOT NULL,
   `created` datetime DEFAULT NULL,
@@ -106,6 +128,8 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
+INSERT INTO `products` (`id`, `name`, `description`, `weight`, `price`, `file_name`, `created`, `modified`, `status`) VALUES
+(2, 'jkj', 'dss', '100', 23.00, 'WIN_20201022_17_57_52_Pro.jpg', '2020-11-18 17:34:19', NULL, '1');
 
 --
 -- Indexes for dumped tables
@@ -157,25 +181,25 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
